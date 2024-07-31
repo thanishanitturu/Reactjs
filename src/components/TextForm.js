@@ -8,23 +8,27 @@ export default function TextForm(props) {
         console.log("handleClick");
         const newText=text1.toUpperCase();
         setText(newText);
+        props.showAlert("changed to uppercase","success")
     }
 
     const handleClick1=()=>
     {
         const newText=text1.toLowerCase();
         setText(newText);
+         props.showAlert("changed to Lowercase","success")
     }
 
     const handlecopy=()=>
     {
         navigator.clipboard.writeText(text1)
+         props.showAlert("copied to clipboard","success")
     }
 
     const handleClear=()=>
     {
         const newText="";
         setText(newText)
+         props.showAlert("cleared the text","success")
     }
     const handeSpeak=()=>
     {
@@ -32,7 +36,7 @@ export default function TextForm(props) {
         const voices=speechSynthesis.getVoices();
         utterance.voice=voices[10];
         speechSynthesis.speak(utterance);
-        //This is another way but here we cant change voice default voice will only be speaked
+        // This is another way but here we cant change voice default voice will only be speaked
         // const utterance=new SpeechSynthesisUtterance();
         // utterance.text=text1;
         // window.speechSynthesis.speak(utterance);
@@ -51,11 +55,11 @@ export default function TextForm(props) {
     }
 
     return (
-<div>
+<div style={{color:props.mode==="dark"?"white":"grey"}}>
 <div className="mb-3">
     <label for="exampleFormControlTextarea1" className="form-label">{props.text}</label>
     <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={text1
-    } onChange={handleChange}></textarea>
+    } onChange={handleChange} style={{backgroundColor:props.mode==="dark"?"white":"grey"}}></textarea>
 </div>
 <button className="btn btn-primary mx-1" onClick={handleClick}>Uppercase</button>
 <button className="btn btn-primary mx-1" onClick={handleClick1}>Lowercase</button>
@@ -68,7 +72,7 @@ export default function TextForm(props) {
     <p>{text1.split(" ").length-1} words and {text1.length} characters</p>
     <p>{0.08*(text1.split(" ").length-1)} to read</p>
     <h2><b>Preview</b></h2>
-    <p>{text1}</p>
+    <p>{text1.length>0?text1:"Enter the text to preview here"}</p>
 </div>
     </div>
     )
