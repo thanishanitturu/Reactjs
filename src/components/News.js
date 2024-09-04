@@ -320,7 +320,7 @@ const News = ({ q, pageSize }) => {
     return (
         <div>
             <div className="container my-3">
-                <h2 className='text-center' style={{ margin: '35px 0px' }}>NewsMonkey-Top Headlines</h2>
+                <h2 className='text-center' style={{ margin: '35px 0px' }}>News-Top Headlines</h2>
                 {loading && <Spinner />}
                 <div className="row no-gutters">
                     {!loading && articles.map((element) => {
