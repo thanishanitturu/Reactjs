@@ -1,98 +1,72 @@
-import { useState } from 'react';
+
 import "./App.css";
+
+import React, { useEffect, useState ,Component} from 'react';
 import Navbar from "./components/Navbar";
-import TextForm from './components/TextForm';
-import Alert from './components/Alert';
-// import About from "./components/About";
+import News from "./components/News";
+import { useLocation } from 'react-router-dom';
 
-// import {
-//     BrowserRouter as Router,
-//     Switch,
-//     Route,
-//     Link,
-//     Routes
-// } from "react-router-dom";
-
-
-function App() {
-    const [mode,setMode]=useState("light")
-    const [alert,setAlert]=useState(null)
-
-    const showAlert=(message,type)=>
-    {
-        setAlert({
-            msg:message,
-            type:type
-        })
-        setTimeout(() => {
-            setAlert(null);
-        }, 2000);
-    }
-    const toggleMode=()=>
-    {
-        if(mode==='light')
-        {
-            setMode('dark');
-            document.body.style.backgroundColor="#042743";
-            showAlert("dark mode enabled","success");
-            document.title="TextUtils:Dark Mode";
-
-            // To change the title of webage
-            // setInterval(()=>
-            // {
-            //     document.title="TextUtils:Dark Mode";
-            // },2000)
-            // setInterval(()=>
-            // {
-            //     document.title="dark mode is amazing"
-            // },1500)
-
-        }
-        else{
-            setMode('light')
-            document.body.style.backgroundColor="white";
-            showAlert("light mode enabled","success");
-            // document.title="TextUtils:Light Mode";
-
-
-            // setInterval(()=>
-            // {
-            //     document.title="TextUtils:Light Mode";
-            // },2000)
-            // setInterval(()=>
-            // {
-            //     document.title="Light mode is amazing"
-            // },1500)
-        }
-    }
-    const greenMode=()=>
-    {
-        document.body.style.backgroundColor="green";
-        showAlert("Green mode enabled","success");
-    
-    }
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+export default class App extends Component {
+    c="John"
+  render() {
+    const pageSize=15
     return (
-        <>
-        {/* <Router> */}
-{/* For we remove the things regarding routes and also in navbar.js we change link to -a href since we will remove Link */}
-<Navbar text="TextUtils" aboutText="About Text" mode={mode} toggleMode={toggleMode} greenMode={greenMode}/>
-<Alert alert={alert}/>
-{/* This is without routing */}
-{/* <div className='container my-3'>
-<TextForm text="Enter the text here" mode={mode} showAlert={showAlert}/>
-</div> */}
-{/* <switch>
-    <Routes>
-    <Route exact path="/about" element={<About/>} />
-    <Route exact path="/" element={<div className='container my-3'><TextForm text="Enter the text here" mode={mode} showAlert={showAlert}/></div>}>
-    </Route>
-    </Routes>
-</switch> */}
-<div className='container my-3'><TextForm text="Enter the text here" mode={mode} showAlert={showAlert}/></div>
-{/* <About/> */}
-{/* </Router> */}
-</>
-    );
+  
+      <div>
+        
+        <Router>
+        {<Navbar />}
+        {/* Hello my first class based Component {this.c} */}
+        {/* <News pageSize={this.pageSize} q={"climate crisis"}/> */}
+        <Routes>
+          <Route exact path="/electric vehicles" element={<News key="electric vehicles" pageSize={this.pageSize} q={"electric vehicles"}/>}/>
+          <Route exact path="/" element={<News pageSize={this.pageSize} q={"sustainable development"}/>}/>
+          <Route exact path="/artificial intelligence" element={<News key="artificial intelligence" pageSize={this.pageSize} q={"artificial intelligence"}/>}/>
+          <Route exact path="/renewable energy" element={<News key="renewable energy" pageSize={this.pageSize} q={"renewable energy"}/>}/>
+          <Route exact path="/global warming" element={<News key="global warming" pageSize={this.pageSize} q={"global warming"}/>}/>
+          <Route exact path="/climate crisis" element={<News key="climate crisis" pageSize={this.pageSize} q={"climate crisis"}/>}/>
+          <Route path="/search" element={<NewsWithSearch />} />
+        </Routes>
+        </Router>
+      </div>
+    )
+  }
+}
+// function NewsWithSearch() {
+//   // const location = useLocation();
+//   //   const searchParams = new URLSearchParams(window.location.search);
+//   //   const query = searchParams.get('q') || 'climate change'; // Default query if not specified
+
+//   //   console.log('Search query:', query); // Log the query to verify
+
+//   //   return <News q={query} />;
+//   const location = useLocation();
+//   const [query, setQuery] = useState(new URLSearchParams(location.search).get('q') || 'climate change');
+
+//   useEffect(() => {
+//     const searchParams = new URLSearchParams(location.search);
+//     const newQuery = searchParams.get('q') || 'climate change';
+//     setQuery(newQuery);
+//   }, [location.search]);
+
+//   return <News q={query} />;
+// }
+function NewsWithSearch() {
+  const location = useLocation();
+  const [query, setQuery] = useState(new URLSearchParams(location.search).get('q') || 'climate change');
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const newQuery = searchParams.get('q') || 'climate change';
+    setQuery(newQuery);
+  }, [location]);
+
+  return <News q={query} />;
 }
 
-export default App;
+
